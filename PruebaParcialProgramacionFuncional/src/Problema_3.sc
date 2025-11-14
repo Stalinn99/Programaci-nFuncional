@@ -6,4 +6,6 @@ val generadorIncrementadorAnonimo: Int => (Int => Int) =
 
 //funcion con nombre
 
-def funcion3(x : Int): Int = x
+def generadorIncrementadorConNombre(incrementar: Int): (Int => Int) = {
+  (x: Int) => x + incrementar
+}
