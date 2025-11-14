@@ -1,0 +1,50 @@
+Pregunta 2
+Ajuste de precios con políticas variables
+En una tienda digital se trabaja con listas de precios que necesitan ser ajustadas antes de ser mostradas al usuario. De acuerdo con el país, la temporada o las promociones vigentes, el ajuste puede consistir en agregar un impuesto, aplicar un descuento o modificar el precio según cierta estrategia comercial. Se requiere elaborar una solución donde exista una única función capaz de recibir la lista de precios y, además, la función que representa la regla de ajuste que se quiera aplicar en ese momento. Esta función deberá retornar una nueva lista de precios ya modificados de acuerdo con la política específica que se haya suministrado.
+
+realiza el siguiente problema en Scala
+
+object TiendaDigital {
+  def ajustarPrecios(
+    precios: List[Double],
+    reglaDeAjuste: Double => Double
+  ): List[Double] = {
+    // 'map' es la forma funcional de aplicar una función a cada elemento
+    // de una lista y devolver una nueva lista con los resultados.
+    precios.map(reglaDeAjuste)
+  }
+  // Política 1: Agregar un impuesto (Ej: 16% de IVA)
+  def agregarIVA(precio: Double): Double = {
+    precio * 1.16
+  }
+
+  // Política 2: Aplicar un descuento (Ej: 25% de descuento)
+  def descuento25(precio: Double): Double = {
+    precio * 0.75
+  }
+
+  // Política 3: Estrategia comercial (Ej: "Precios de remate", todo 5.50 más)
+  def preciosRemate(precio: Double): Double = {
+    precio + 5.50
+  }
+  def main(args: Array[String]): Unit = {
+    
+    val preciosOriginales = List(100.0, 50.0, 20.0, 80.0)
+    println(s"Precios Originales: $preciosOriginales")
+
+    // Aplicamos la política de IVA pasando la función 'agregarIVA' como argumento
+    val preciosConIVA = ajustarPrecios(preciosOriginales, agregarIVA)
+    println(s"Precios con IVA:    $preciosConIVA")
+
+    // Aplicamos la política de descuento pasando la función 'descuento25'
+    val preciosConDescuento = ajustarPrecios(preciosOriginales, descuento25)
+    println(s"Precios con 25% OFF: $preciosConDescuento")
+
+    // Aplicamos la política de remate
+    val preciosEnRemate = ajustarPrecios(preciosOriginales, preciosRemate)
+    println(s"Precios de Remate:   $preciosEnRemate")
+    // Política: Un descuento fijo de 10.0
+    val preciosConDescuentoFijo = ajustarPrecios(preciosOriginales, precio => precio - 10.0)
+    println(s"Precios con S/10 OFF: $preciosConDescuentoFijo")
+  }
+}
